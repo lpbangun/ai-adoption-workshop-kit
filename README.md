@@ -2,6 +2,8 @@
 
 An interactive, fictional 45-minute group workshop for a hypothetical non-technical People, operations, or enablement team already using an AI-assisted knowledge and intake workflow.
 
+[Open the live workshop](https://ai-adoption-workshop-kit.logsam-fans-triple3.chatgpt.site)
+
 The prototype includes:
 
 - a concise adoption rationale and complete timed facilitator flow
