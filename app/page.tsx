@@ -255,15 +255,15 @@ export default function Home() {
           </button>
         </div>
         <div className="time-progress" aria-hidden="true">
-          <span style={{ width: `${progress}%` }} />
+          <span style={{ transform: `scaleX(${progress / 100})` }} />
         </div>
       </header>
 
       <div className="workspace">
         <aside className="session-rail" aria-label="Workshop agenda">
           <div className="rail-heading">
-            <span className="eyebrow">45-minute field kit</span>
             <strong>AI adoption, in practice</strong>
+            <span>45-minute field kit</span>
           </div>
           <nav>
             <ol className="stage-list">
@@ -322,8 +322,8 @@ export default function Home() {
           {activeStage === 0 && (
             <section className="stage stage-intro" aria-labelledby="why-title">
               <div className="intro-copy">
-                <span className="kicker">Facilitator opening · 0–4 minutes</span>
                 <h1 id="why-title">Why this workshop is designed this way.</h1>
+                <p className="stage-meta">Facilitator opening · 0–4 minutes</p>
                 <p className="lede">
                   AI adoption becomes durable when teams practice real workflows, make
                   human-review boundaries explicit, and turn learner friction into
@@ -336,7 +336,7 @@ export default function Home() {
               </div>
 
               <aside className="session-brief" aria-label="Session facts">
-                <span className="eyebrow">Session brief</span>
+                <h2>Session brief</h2>
                 <dl>
                   <div>
                     <dt>Time</dt>
@@ -359,10 +359,12 @@ export default function Home() {
 
               <div className="reason-grid">
                 <article className="reason-card problem">
-                  <span className="card-number">01</span>
+                  <span className="card-number" aria-hidden="true">01</span>
                   <div>
-                    <p className="eyebrow">Problem</p>
-                    <h2>Knowing the tool is not the same as trusting the workflow.</h2>
+                    <h2>
+                      <span className="reason-label">Problem</span>
+                      Knowing the tool is not the same as trusting the workflow.
+                    </h2>
                     <p>
                       Generic demos skip the judgment calls that determine whether a
                       draft is actually safe and useful.
@@ -370,10 +372,12 @@ export default function Home() {
                   </div>
                 </article>
                 <article className="reason-card action">
-                  <span className="card-number">02</span>
+                  <span className="card-number" aria-hidden="true">02</span>
                   <div>
-                    <p className="eyebrow">Practice action</p>
-                    <h2>Rehearse the handoffs, not just the prompt.</h2>
+                    <h2>
+                      <span className="reason-label">Practice action</span>
+                      Rehearse the handoffs, not just the prompt.
+                    </h2>
                     <p>
                       Learners frame context, improve a draft, review the response, and
                       spot where a person must take over.
@@ -381,10 +385,12 @@ export default function Home() {
                   </div>
                 </article>
                 <article className="reason-card evidence">
-                  <span className="card-number">03</span>
+                  <span className="card-number" aria-hidden="true">03</span>
                   <div>
-                    <p className="eyebrow">Learning evidence</p>
-                    <h2>Turn shared friction into the next improvement.</h2>
+                    <h2>
+                      <span className="reason-label">Learning evidence</span>
+                      Turn shared friction into the next improvement.
+                    </h2>
                     <p>
                       Anonymous patterns feed facilitator discussion, enablement
                       priorities, and a fictional product-feedback backlog.
@@ -399,13 +405,13 @@ export default function Home() {
             <section className="stage" aria-labelledby="frame-title">
               <StageHeader
                 id="frame-title"
-                kicker="Workflow framing · 4–8 minutes"
+                meta="Workflow framing · 4–8 minutes"
                 title="See the work before adding AI."
                 copy="Name the decision, evidence, handoffs, and accountable reviewer. AI supports a step; it does not own the outcome."
               />
               <div className="workflow-board">
                 <div className="workflow-context">
-                  <span className="eyebrow">Fictional workflow</span>
+                  <p className="context-label">Fictional workflow</p>
                   <h2>Answer a manager’s contractor onboarding question</h2>
                   <p>
                     Intake arrives through the team’s knowledge and request queue.
@@ -448,7 +454,7 @@ export default function Home() {
             <section className="stage" aria-labelledby="safe-title">
               <StageHeader
                 id="safe-title"
-                kicker="Safe-use orientation · 8–12 minutes"
+                meta="Safe-use orientation · 8–12 minutes"
                 title="Four boundaries for responsible practice."
                 copy="Select each boundary as your table confirms how it applies to this fictional onboarding workflow."
               />
@@ -497,7 +503,7 @@ export default function Home() {
             <section className="stage coach-stage" aria-labelledby="coach-title">
               <StageHeader
                 id="coach-title"
-                kicker="Adaptive practice · 12–25 minutes"
+                meta="Adaptive practice · 12–25 minutes"
                 title="Build a prompt around the workflow."
                 copy="The Practice Coach only helps structure this task, ask for missing context, define review checks, and flag escalation needs."
               />
@@ -511,8 +517,8 @@ export default function Home() {
                 >
                   <div className="coach-panel-heading">
                     <div>
-                      <span className="eyebrow">Your practice draft</span>
                       <h2>Fictional contractor intake</h2>
+                      <p className="panel-meta">Your practice draft</p>
                     </div>
                     <span className="constraint-badge">Constrained coach</span>
                   </div>
@@ -577,7 +583,7 @@ export default function Home() {
                       <div className="response-heading">
                         <span className="coach-avatar" aria-hidden="true">PC</span>
                         <div>
-                          <span className="eyebrow">Practice Coach</span>
+                          <strong>Practice Coach</strong>
                           <p>Guidance for this workflow · fictional output</p>
                         </div>
                       </div>
@@ -634,7 +640,7 @@ export default function Home() {
             <section className="stage" aria-labelledby="clinic-title">
               <StageHeader
                 id="clinic-title"
-                kicker="Edge-case clinic · 25–35 minutes"
+                meta="Edge-case clinic · 25–35 minutes"
                 title="Practice the moment AI should stop."
                 copy="Choose a fictional case, decide as a table, then reveal the review boundary and facilitator question."
               />
@@ -676,11 +682,11 @@ export default function Home() {
                   ) : (
                     <div className="case-reveal" aria-live="polite">
                       <div>
-                        <span className="eyebrow">Recommended move</span>
+                        <h3>Recommended move</h3>
                         <p>{clinicCases[activeCase].move}</p>
                       </div>
                       <blockquote>
-                        <span>Discuss</span>
+                        <strong>Discuss</strong>
                         “{clinicCases[activeCase].question}”
                       </blockquote>
                     </div>
@@ -699,24 +705,26 @@ export default function Home() {
             <section className="stage board-stage" aria-labelledby="board-title">
               <StageHeader
                 id="board-title"
-                kicker="Anonymous live learning board · 35–42 minutes"
+                meta="Anonymous live learning board · 35–42 minutes"
                 title="Make the group’s friction visible."
                 copy="Fictional, de-identified reflections cluster into shared themes for discussion. Contributions are anonymous by default."
               />
               <div className="board-stats" aria-label="Fictional learning board summary">
-                <div>
-                  <span>Contributions</span>
-                  <strong>{reflections.length}</strong>
-                </div>
-                <div>
-                  <span>Shared themes</span>
-                  <strong>3</strong>
-                </div>
-                <div>
-                  <span>Needs product input</span>
-                  <strong>{themeCounts.find((item) => item.theme === "Escalation")?.count}</strong>
-                </div>
-                <p>Illustrative data · updates in this prototype only</p>
+                <p className="board-stats-note">Illustrative data · updates in this prototype only</p>
+                <dl>
+                  <div>
+                    <dt>Contributions</dt>
+                    <dd>{reflections.length}</dd>
+                  </div>
+                  <div>
+                    <dt>Shared themes</dt>
+                    <dd>3</dd>
+                  </div>
+                  <div>
+                    <dt>Needs product input</dt>
+                    <dd>{themeCounts.find((item) => item.theme === "Escalation")?.count}</dd>
+                  </div>
+                </dl>
               </div>
 
               <div className="learning-board">
@@ -747,8 +755,8 @@ export default function Home() {
 
                 <form className="reflection-form" onSubmit={submitReflection}>
                   <div>
-                    <span className="eyebrow">Add a reflection</span>
                     <h2>What would make this workflow safer or easier?</h2>
+                    <p className="panel-meta">Add a reflection</p>
                   </div>
                   <label className="sr-only" htmlFor="reflection">
                     Your fictional, de-identified reflection
@@ -789,8 +797,8 @@ export default function Home() {
 
               <section className="backlog" aria-labelledby="backlog-title">
                 <div>
-                  <span className="eyebrow">Product-feedback backlog · fictional</span>
                   <h2 id="backlog-title">What the learning team carries forward</h2>
+                  <p className="panel-meta">Product-feedback backlog · fictional</p>
                 </div>
                 <ol>
                   {backlogItems.map((item) => (
@@ -809,8 +817,8 @@ export default function Home() {
           {activeStage === 6 && (
             <section className="stage close-stage" aria-labelledby="close-title">
               <div className="close-hero">
-                <span className="kicker">Commitments & close · 42–45 minutes</span>
                 <h1 id="close-title">Practice made the boundary visible.</h1>
+                <p className="stage-meta">Commitments & close · 42–45 minutes</p>
                 <p>
                   Close by choosing one workflow behavior to repeat and one friction
                   signal to route back to the team.
@@ -818,29 +826,35 @@ export default function Home() {
               </div>
               <div className="commitment-grid">
                 <article>
-                  <span className="card-number">01</span>
-                  <p className="eyebrow">Use next</p>
-                  <h2>Structure prompts around source, audience, outcome, and limits.</h2>
+                  <span className="card-number" aria-hidden="true">01</span>
+                  <h2>
+                    <span className="reason-label">Use next</span>
+                    Structure prompts around source, audience, outcome, and limits.
+                  </h2>
                 </article>
                 <article>
-                  <span className="card-number">02</span>
-                  <p className="eyebrow">Review every time</p>
-                  <h2>Check claims, versions, names, dates, links, and next action.</h2>
+                  <span className="card-number" aria-hidden="true">02</span>
+                  <h2>
+                    <span className="reason-label">Review every time</span>
+                    Check claims, versions, names, dates, links, and next action.
+                  </h2>
                 </article>
                 <article>
-                  <span className="card-number">03</span>
-                  <p className="eyebrow">Escalate early</p>
-                  <h2>Pause for sensitive detail, source conflict, and consequential judgment.</h2>
+                  <span className="card-number" aria-hidden="true">03</span>
+                  <h2>
+                    <span className="reason-label">Escalate early</span>
+                    Pause for sensitive detail, source conflict, and consequential judgment.
+                  </h2>
                 </article>
               </div>
               <div className="close-evidence">
                 <div>
-                  <span className="eyebrow">Fictional session signal</span>
+                  <p className="panel-meta">Fictional session signal</p>
                   <strong>{reflections.length}</strong>
                   <p>anonymous learning reflections ready for facilitator synthesis</p>
                 </div>
                 <div className="facilitator-close">
-                  <span>Final prompt</span>
+                  <p className="panel-meta">Final prompt</p>
                   <p>“What will you do differently in your next real intake?”</p>
                 </div>
               </div>
@@ -862,34 +876,31 @@ export default function Home() {
 
 function StageHeader({
   id,
-  kicker,
+  meta,
   title,
   copy,
 }: {
   id: string;
-  kicker: string;
+  meta: string;
   title: string;
   copy: string;
 }) {
   return (
     <header className="stage-header">
-      <span className="kicker">{kicker}</span>
-      <div>
-        <h1 id={id}>{title}</h1>
-        <p>{copy}</p>
-      </div>
+      <h1 id={id}>{title}</h1>
+      <p className="stage-meta">{meta}</p>
+      <p className="stage-lede">{copy}</p>
     </header>
   );
 }
 
 function FacilitatorCue({ children }: { children: React.ReactNode }) {
   return (
-    <aside className="facilitator-cue">
-      <span className="cue-icon" aria-hidden="true">F</span>
-      <div>
-        <span className="eyebrow">Facilitator cue</span>
-        <p>{children}</p>
-      </div>
+    <aside className="facilitator-cue" aria-label="Facilitator cue">
+      <span className="cue-icon" aria-hidden="true">
+        F
+      </span>
+      <p>{children}</p>
     </aside>
   );
 }

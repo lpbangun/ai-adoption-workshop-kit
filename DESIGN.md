@@ -35,7 +35,7 @@ Planned palette:
 - soft chartreuse for evidence and positive learning signals
 - cool gray-blue for secondary surfaces
 
-Typography should pair a distinctive editorial display face with a highly legible sans-serif UI face, while preserving robust system fallbacks. Avoid generic dashboard chrome, glossy gradients, excessive pills, and decorative visual noise.
+Typography should pair a distinctive editorial display face with a highly legible sans-serif UI face, while preserving robust system fallbacks. The prototype uses Fraunces for display and Source Sans 3 for UI. Avoid generic dashboard chrome, glossy gradients, excessive pills, and decorative visual noise.
 
 ## Public-reference validation and uncertainty
 
