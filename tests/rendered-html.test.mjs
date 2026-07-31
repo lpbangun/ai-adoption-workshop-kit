@@ -5,14 +5,15 @@ import test from "node:test";
 const templateRoot = new URL("../", import.meta.url);
 const BASE_PATH = "/ai-adoption-workshop-kit";
 
-async function render(pathname = `${BASE_PATH}/`) {
+async function render(pathname = `${BASE_PATH}/`, requestHeaders = {}) {
   const workerUrl = new URL("../dist/server/index.js", import.meta.url);
   workerUrl.searchParams.set("test", `${process.pid}-${Date.now()}`);
   const { default: worker } = await import(workerUrl.href);
+  const host = requestHeaders.host ?? "localhost";
 
   return worker.fetch(
-    new Request(`http://localhost${pathname}`, {
-      headers: { accept: "text/html" },
+    new Request(`http://${host}${pathname}`, {
+      headers: { accept: "text/html", ...requestHeaders },
     }),
     {
       ASSETS: {
@@ -48,6 +49,48 @@ test("server-renders the fictional workshop rationale and session shell", async 
 test("rejects requests outside the branded subpath mount", async () => {
   const response = await render("/");
   assert.equal(response.status, 404);
+});
+
+test("omits upstream chatgpt.site from Open Graph, Twitter, and icon metadata", async () => {
+  const proxied = await render(`${BASE_PATH}/`, {
+    host: "ai-adoption-workshop-kit.example.chatgpt.site",
+    "x-forwarded-host": "portfolio.example",
+    "x-forwarded-proto": "https",
+  });
+  assert.equal(proxied.status, 200);
+  const proxiedHtml = await proxied.text();
+  assert.doesNotMatch(proxiedHtml, /chatgpt\.site/i);
+  assert.match(
+    proxiedHtml,
+    /(?:property|name)="og:image" content="https:\/\/portfolio\.example\/ai-adoption-workshop-kit\/og\.png"/,
+  );
+  assert.match(
+    proxiedHtml,
+    /name="twitter:image" content="https:\/\/portfolio\.example\/ai-adoption-workshop-kit\/og\.png"/,
+  );
+  assert.match(
+    proxiedHtml,
+    /rel="icon" href="https:\/\/portfolio\.example\/ai-adoption-workshop-kit\/og\.png"/,
+  );
+
+  const upstreamOnly = await render(`${BASE_PATH}/`, {
+    host: "ai-adoption-workshop-kit.example.chatgpt.site",
+  });
+  assert.equal(upstreamOnly.status, 200);
+  const upstreamHtml = await upstreamOnly.text();
+  assert.doesNotMatch(upstreamHtml, /chatgpt\.site/i);
+  assert.match(
+    upstreamHtml,
+    new RegExp(`(?:property|name)="og:image" content="${BASE_PATH}/og\\.png"`),
+  );
+  assert.match(
+    upstreamHtml,
+    new RegExp(`name="twitter:image" content="${BASE_PATH}/og\\.png"`),
+  );
+  assert.match(
+    upstreamHtml,
+    new RegExp(`rel="(?:shortcut )?icon" href="${BASE_PATH}/og\\.png"`),
+  );
 });
 
 test("ships all required workshop capabilities in the interactive source", async () => {
