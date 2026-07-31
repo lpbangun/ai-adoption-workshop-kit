@@ -23,7 +23,7 @@ npm ci
 npm run dev
 ```
 
-Open the local URL printed by the development server.
+Open the local URL printed by the development server at `/ai-adoption-workshop-kit` (the branded subpath used for reverse-proxy hosting).
 
 ## Verify
 

@@ -61,6 +61,7 @@ The reference capture does not reliably establish exact palette, spacing, grid, 
 ## Acceptance checks
 
 - Prototype runs from the project folder.
+- App is mountable at the branded subpath `/ai-adoption-workshop-kit` through an external reverse proxy, with asset URLs and metadata routed under that path and no change to the workshop visual identity.
 - Full 45-minute group flow is navigable and understandable.
 - Practice Coach interaction demonstrably returns all four constrained output types.
 - Edge-case clinic includes selectable scenarios and facilitator prompts.

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Fraunces, Source_Sans_3 } from "next/font/google";
 import { headers } from "next/headers";
+import { withBasePath } from "../config/base-path";
 import "./globals.css";
 
 const display = Fraunces({
@@ -23,15 +24,16 @@ export async function generateMetadata(): Promise<Metadata> {
   const title = "Fieldwork — AI Adoption Workshop Kit";
   const description =
     "A fictional, interactive 45-minute workshop for practicing safer AI-enabled People and operations workflows.";
-  const socialImage = new URL("/og.png", metadataBase).toString();
+  const socialImagePath = withBasePath("/og.png");
+  const socialImage = new URL(socialImagePath, metadataBase).toString();
 
   return {
     metadataBase,
     title,
     description,
     icons: {
-      icon: "/og.png",
-      shortcut: "/og.png",
+      icon: socialImagePath,
+      shortcut: socialImagePath,
     },
     openGraph: {
       title,

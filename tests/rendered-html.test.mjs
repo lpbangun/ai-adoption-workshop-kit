@@ -3,14 +3,15 @@ import { access, readFile } from "node:fs/promises";
 import test from "node:test";
 
 const templateRoot = new URL("../", import.meta.url);
+const BASE_PATH = "/ai-adoption-workshop-kit";
 
-async function render() {
+async function render(pathname = `${BASE_PATH}/`) {
   const workerUrl = new URL("../dist/server/index.js", import.meta.url);
   workerUrl.searchParams.set("test", `${process.pid}-${Date.now()}`);
   const { default: worker } = await import(workerUrl.href);
 
   return worker.fetch(
-    new Request("http://localhost/", {
+    new Request(`http://localhost${pathname}`, {
       headers: { accept: "text/html" },
     }),
     {
@@ -38,14 +39,25 @@ test("server-renders the fictional workshop rationale and session shell", async 
   assert.match(html, /Practice action/);
   assert.match(html, /Learning evidence/);
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton/i);
+  assert.match(html, new RegExp(`${BASE_PATH}/assets/`));
+  assert.match(html, new RegExp(`${BASE_PATH}/og\\.png`));
+  assert.match(html, new RegExp(`${BASE_PATH}/assets/_vinext_fonts/`));
+  assert.doesNotMatch(html, /(?:href|src)="\/assets\//);
+});
+
+test("rejects requests outside the branded subpath mount", async () => {
+  const response = await render("/");
+  assert.equal(response.status, 404);
 });
 
 test("ships all required workshop capabilities in the interactive source", async () => {
-  const [page, css, layout, design] = await Promise.all([
+  const [page, css, layout, design, nextConfig, basePathConfig] = await Promise.all([
     readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
     readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
     readFile(new URL("../DESIGN.md", import.meta.url), "utf8"),
+    readFile(new URL("../next.config.ts", import.meta.url), "utf8"),
+    readFile(new URL("../config/base-path.ts", import.meta.url), "utf8"),
   ]);
 
   assert.match(page, /AI Practice Coach/);
@@ -65,6 +77,8 @@ test("ships all required workshop capabilities in the interactive source", async
   assert.match(css, /@media \(max-width: 560px\)/);
   assert.match(layout, /fictional, interactive 45-minute workshop/i);
   assert.match(design, /not an Eliza client engagement/i);
+  assert.match(nextConfig, /basePath:\s*BASE_PATH/);
+  assert.match(basePathConfig, new RegExp(`BASE_PATH = "${BASE_PATH}"`));
 
   await assert.rejects(access(new URL("../app/_sites-preview", import.meta.url)));
   await assert.rejects(access(new URL("../public/_sites-preview", templateRoot)));
